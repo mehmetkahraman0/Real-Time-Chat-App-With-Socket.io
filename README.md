@@ -8,9 +8,8 @@ Bu proje, **React** ve **Socket.IO** kullanılarak geliştirilmiş bir gerçek z
 
 - Gerçek zamanlı mesajlaşma (Socket.IO)
 - Kullanıcı adıyla giriş
-- Oda (room) sistemine dayalı yapı (isteğe bağlı)
+- Oda (room) sistemine dayalı yapı
 - Kullanıcıların mesajlarını anlık görme
-- Mesaj gönderildiğinde otomatik kaydırma
 - Basit ve responsive arayüz (React)
 
 ---
