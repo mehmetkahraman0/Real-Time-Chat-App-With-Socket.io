@@ -27,6 +27,9 @@ const ChatRoom = ({ userName, roomId }: ChatRoomProps) => {
     }, [roomId, messages])
 
     const handleSendMessage = () => {
+
+        if(message == "") return
+
         const data = {
             room: roomId,
             message,
