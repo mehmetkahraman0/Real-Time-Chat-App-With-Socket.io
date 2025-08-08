@@ -32,7 +32,7 @@ const getAllChanel = asyncHandler(
             const chanels = await Chanel.find({})
             return res.status(200).json(chanels)
         }catch(e) {
-            return res.status(400).json({message:"kanallar alınamadı"})
+            return res.status(400).json({message:"kanallar alınamadı", e})
         }
     }
 )
@@ -47,7 +47,7 @@ const getChanel = asyncHandler(
             const chanel = await Chanel.findById(id)
             return res.status(200).json(chanel)
         }catch (e) {
-            return res.status(400).json({message:"kanal bilgileri alınamadı."})
+            return res.status(400).json({message:"kanal bilgileri alınamadı.", e})
         }
     }
 )
@@ -55,22 +55,45 @@ const getChanel = asyncHandler(
 const getChanelByUser = asyncHandler(
     async (req,res) => {
         try{
-
+            const userJoinedChanel = await Chanel.find({
+                users:req.user._id,
+            })
+            return res.status(200).json(userJoinedChanel)
         }catch (e) {
-            
+            return res.status(400).json({message:"kanalların bilgileri alınamadı.", e})
         }
     }
 )
 
 const updateChanel = asyncHandler(
     async (req,res) => {
-
+        const {isPrivate, name} = req.body;
+        const {id} = req.params;
+        if(!id){
+            return res.status(404).json({message:"kanal bulunmadı."})
+        }
+        try{
+            const updatedChanel = await  Chanel.findById(id)
+            updatedChanel.name = name || updatedChanel.name
+            updatedChanel.isPrivate = isPrivate || updatedChanel.isPrivate
+            const savedUpdateChanel = await updatedChanel.save()
+            return res.status(200).json(savedUpdateChanel)
+        }catch (e) {
+            return res.status(400).json({message:"Kanal bilgileri güncellenemedi : ",e})
+        }
     }
 )
 
 const deleteChanel = asyncHandler(
     async (req,res) => {
-
+        const {id} = req.params;
+        if(!id) return res.status(404).json({message:"kanal bulunamadı. "})
+        try{
+            const deletedChanel = await Chanel.findByIdAndDelete(id)
+            return res.status(200).json(deletedChanel)
+        }catch (e) {
+            return res.status(400).json({message:"kanal silme sırasında bir sorun oluştu.", e})
+        }
     }
 )
 
