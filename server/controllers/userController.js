@@ -41,7 +41,7 @@ const loginUser = asyncHandler(
                     _id:existingUser._id,
                     username:existingUser.username,
                     email:existingUser.email,
-                    joinedRoom : existingUser.joinedRoom
+                    joinedChanel : existingUser.joinedChanel
                 });
             }else{
                 return res.status(400).json({message:"Şifre eşleşmiyor"});
@@ -70,7 +70,7 @@ const getAllUser = asyncHandler(
         res.json(users)
     }
 )
-
+//fix gerekiyor kullancının join room olayı halledilmeli
 const updateCurrentUser = asyncHandler(
     async (req, res) => {
     console.log(req.user)
@@ -93,8 +93,22 @@ const updateCurrentUser = asyncHandler(
         }catch (e) {
             return res.status(400).json({message:"Update Error : " + e});
         }
-
     }
 )
 
-export { registerUser,loginUser,getCurrentUser,getAllUser,updateCurrentUser}
+const getUserById = asyncHandler(
+    async (req, res) => {
+        const {id} = req.params;
+        if(!id){
+            return res.status(404).json({message:"Kullanıcı bulunamadı. "});
+        }
+        try{
+            const user = await User.findById(id).select("-password");
+            return res.status(200).json(user)
+        }catch (e) {
+
+        }
+    }
+)
+
+export { registerUser,loginUser,getCurrentUser,getAllUser,updateCurrentUser, getUserById}

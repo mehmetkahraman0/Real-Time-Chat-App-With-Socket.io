@@ -5,6 +5,8 @@ import connectedDb from "./config/mongoDb.js";
 import userRouter from "./routers/userRouter.js";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import roomRouter from "./routers/roomRouter.js";
+import chanelRouter from "./routers/chanelRouter.js";
 
 const app = express()
 
@@ -34,10 +36,13 @@ io.on("connection", async (socket) => {
         console.log("message event",data)
         socket.to(data.room).emit("messageReturn", data)
     })
-
 })
 
 app.use("/api/user", userRouter)
+app.use("/api/room", roomRouter)
+app.use("/api/chanel", chanelRouter)
+
+
 
 server.listen(3000, () => {
     console.log("app is listening ...")
