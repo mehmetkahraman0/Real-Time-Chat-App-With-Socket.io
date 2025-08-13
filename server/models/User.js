@@ -5,6 +5,7 @@ const User  = new mongoose.Schema({
     email:{type:String,required:true,unique:true},
     password:{type:String,required:true},
     joinedChanel:[{type:Schema.Types.ObjectId,required:true}],
+    userFoto:{type:String,default:null},
 },{timestamps:true});
 
 export default mongoose.model("User",User);

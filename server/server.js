@@ -7,10 +7,12 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import roomRouter from "./routers/roomRouter.js";
 import chanelRouter from "./routers/chanelRouter.js";
+import Message from "./models/Message.js";
+import messageRouter from "./routers/messageRouter.js";
 
-const app = express()
+export const app = express()
 
-dotenv.config();
+//dotenv.config();
 connectedDb()
 
 app.use(express.json())
@@ -27,21 +29,26 @@ const io = new Server(server, {
 io.on("connection", async (socket) => {
     console.log("Socket ID", socket.id)
 
-    socket.on("room", (data) => {
-        console.log("room event",data)
-        socket.join(data)
+    socket.on("joinRoom", (roomId) => {
+        console.log("kullancının katıldığı oda ID'si",roomId)
+        socket.join(roomId)
     })
 
-    socket.on("message", (data) => {
-        console.log("message event",data)
-        socket.to(data.room).emit("messageReturn", data)
+    socket.on("sendMessage", async (userId, roomId, message) => {
+        try{
+            const newMessage= await Message.create({userId, roomId, message})
+            console.log("message", newMessage)
+            io.to(roomId).emit("newMessage",newMessage)
+        } catch (e) {
+            console.error("mesaj gönderme hatası :",e)
+        }
     })
 })
 
 app.use("/api/user", userRouter)
 app.use("/api/room", roomRouter)
 app.use("/api/chanel", chanelRouter)
-
+app.use("/api/message", messageRouter)
 
 
 server.listen(3000, () => {

@@ -7,6 +7,8 @@ import createToken from "../utils/createToken.js";
 const registerUser = asyncHandler(
     async (req, res) => {
         const {username, password, email} = req.body;
+
+        console.log(req.file);
         if(!username || !password || !email){
            return res.status(400).json({message:"Bilgileri eksiksiz giriniz."});
         }
@@ -15,7 +17,8 @@ const registerUser = asyncHandler(
             const newUser = new User({
                 username,
                 password: hashedPass,
-                email
+                email,
+                userFoto :req.file.path
             })
             await newUser.save();
             return res.status(200).json(newUser);
@@ -52,6 +55,15 @@ const loginUser = asyncHandler(
     }
 )
 
+const logoutUser = asyncHandler(
+    async (req, res) => {
+        res.cookie("token","", {
+            httpOnly: true,
+            expires: new Date(0)
+        })
+    }
+)
+
 const getCurrentUser = asyncHandler(
     async (req, res) => {
         try{
@@ -70,7 +82,7 @@ const getAllUser = asyncHandler(
         res.json(users)
     }
 )
-//fix gerekiyor kullancının join room olayı halledilmeli
+//fix gerekiyor kullancının join chanel olayı halledilmeli
 const updateCurrentUser = asyncHandler(
     async (req, res) => {
     console.log(req.user)
@@ -79,6 +91,9 @@ const updateCurrentUser = asyncHandler(
             const user = await User.findById(req.user._id)
             user.username = username || user.username;
             user.email = email || user.email;
+            if(req.file) {
+                user.userFoto = req.file.path || user.userFoto
+            }
             if(newPassword){
                 const oldPassword = await bcrypt.compare(password, user.password)
                if(oldPassword)
@@ -89,6 +104,7 @@ const updateCurrentUser = asyncHandler(
                 _id: updatedUser._id,
                 username: updatedUser.username,
                 email: updatedUser.email,
+                userFoto: updatedUser.userFoto,
             })
         }catch (e) {
             return res.status(400).json({message:"Update Error : " + e});
@@ -111,4 +127,4 @@ const getUserById = asyncHandler(
     }
 )
 
-export { registerUser,loginUser,getCurrentUser,getAllUser,updateCurrentUser, getUserById}
+export { registerUser,loginUser, logoutUser,getCurrentUser,getAllUser,updateCurrentUser, getUserById}

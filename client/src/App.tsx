@@ -1,10 +1,13 @@
-import UserJoinPage from "./pages/UserJoinPage"
+import {ToastContainer} from "react-toastify";
+import {Outlet} from "react-router-dom";
 
 function App() {
   return (
-    <div className="w-[100%] h-[100%]">
-      <UserJoinPage></UserJoinPage>
-    </div>
+    <>
+    <ToastContainer />
+
+      <Outlet/>
+    </>
   )
 }
 
