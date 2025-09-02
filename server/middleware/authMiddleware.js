@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 const authendicate = asyncHandler(
     async (req, res, next) => {
-        let token = req.cookies.token
+        let token = req.cookies.jwtToken
         if(token){
             try{
                 const decoded = jwt.verify(token, "aaabbb");

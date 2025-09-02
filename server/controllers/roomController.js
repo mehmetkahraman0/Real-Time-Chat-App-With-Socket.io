@@ -1,22 +1,27 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Room from "../models/Room.js";
 import * as crypto from "node:crypto";
+import Chanel from "../models/Chanel.js";
 
 const createRoom = asyncHandler(
     async (req,res) => {
-        const {name,isPrivate,type} = req.body;
-        if(!name || !isPrivate){
+        const {name,type,chanelId} = req.body;
+        if(!name || !type){
             return res.status(404).json({message:"Bilgileri eksiksiz giriniz"});
         }
         try{
-            const inviteCode = crypto.randomBytes(4).toString("hex") + crypto.randomBytes(4).toString("hex")
             const createdRoom = new Room({
                 name,
                 type,
+                chanelId,
             })
             await createdRoom.save();
+            const chanel = await  Chanel.findOne({_id:chanelId});
+            chanel.rooms.push(createdRoom._id);
+            await chanel.save()
             return res.status(202).json(createdRoom)
         }catch (e){
+            console.error(e);
             return res.status(400).json({message:"Oda oluşturulamadı : ",e});
         }
     }
@@ -29,10 +34,10 @@ const getRoom = asyncHandler(
             return res.status(404).json({message:"oda bulunumadı"});
         }
         try{
-            const room = await Room.findById(id)
+            const room = await Room.findOne({_id:id})
             return res.status(200).json(room)
         }catch (e) {
-            return res.stat(400).json({message:"oda bilgileri alınamadı:", e})
+            return res.status(400).json({message:"oda bilgileri alınamadı:", e})
         }
     }
 )
@@ -66,6 +71,7 @@ const deleteRoom = asyncHandler(
 const updateRoom = asyncHandler(
     async (req,res) => {
         const {id} = req.params;
+        console.log(id)
         const {isPrivate, name} = req.body;
         try{
             const room = await Room.findById(id)
@@ -77,7 +83,7 @@ const updateRoom = asyncHandler(
             }
 
         }catch (e) {
-            return res.stat(400).json({message:"update işlemi gerçekleşmedi :", e})
+            return res.status(400).json({message:"update işlemi gerçekleşmedi :", e})
         }
     }
 )

@@ -4,6 +4,6 @@ import {authendicate} from "../middleware/authMiddleware.js";
 
 const messageRouter = express.Router()
 
-messageRouter.get('/', authendicate, getMessage)
+messageRouter.get('/:id', authendicate, getMessage)
 
 export default messageRouter

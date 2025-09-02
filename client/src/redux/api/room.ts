@@ -9,6 +9,7 @@ const roomApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body:data
             }),
+            invalidatesTags:["getChanelByCreateRoom"]
         }),
         updateRoom : builder.mutation({
             query : ({data, id}) => ({
@@ -30,7 +31,7 @@ const roomApiSlice = apiSlice.injectEndpoints({
         }),
         getRoomById : builder.query({
             query:(id)=> ({
-                url:`${ROOM_URL}/${id}`,
+                url:`${ROOM_URL}/room/${id}`,
             })
         }),
     })
@@ -41,4 +42,4 @@ export const {
     useUpdateRoomMutation,
     useDeleteRoomMutation,
     useGetAllRoomQuery,
-    useGetRoomByIdQuery} = roomApiSlice
+    useGetRoomByIdQuery,useLazyGetRoomByIdQuery} = roomApiSlice

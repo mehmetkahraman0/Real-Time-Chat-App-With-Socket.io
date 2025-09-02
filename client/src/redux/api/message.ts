@@ -4,11 +4,11 @@ import {MESSAGE_URL} from "../constants.ts";
 const messageApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
     getMessage: builder.query({
-        query:() => ({
-            url:`${MESSAGE_URL}`
+        query:(id) => ({
+            url:`${MESSAGE_URL}/${id}`
         })
     })
     })
 })
 
-export const {useGetMessageQuery} = messageApiSlice
+export const {useGetMessageQuery, useLazyGetMessageQuery} = messageApiSlice

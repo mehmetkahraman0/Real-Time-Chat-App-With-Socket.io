@@ -5,7 +5,7 @@ const Chanel = new mongoose.Schema({
     users:[{type:mongoose.Schema.Types.ObjectId ,ref:"User"}],
     rooms:[{type:mongoose.Schema.Types.ObjectId, ref:"Room"}],
     isPrivate:{type:Boolean,default:false},
-    inviteCode:{type:String,default:null},
+    inviteCode:[{code:{type:String,default:null}, endTime:{type:Date,default:null}, selectedRoom:{type:String,default:null}}],
     admin:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
     chanelFoto:{type:String,default:null},
 })

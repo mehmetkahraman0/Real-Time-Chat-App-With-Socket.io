@@ -8,19 +8,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url : `${USER_URL}/register`,
                 method: "POST",
                 body:data
-            })
+            }),
         }),
         userLogin: builder.mutation({
             query : (data) => ({
                 url: `${USER_URL}/login`,
                 method: "POST",
-                body:data
-            })
+                body:data,
+                credentials: "include"
+            }),
         }),
         currentUserLogout: builder.mutation({
             query : () => ({
                 url: `${USER_URL}/logout`,
-                method: "POST"
+                method: "POST",
+                credentials: "include"
             })
         }),
         currentUserUpdate: builder.mutation({
@@ -55,4 +57,6 @@ export const {
     useCurrentUserUpdateMutation,
     useGetAllUsersQuery,
     useGetCurrentUserQuery,
-    useGetUserByIdQuery} = userApiSlice;
+    useGetUserByIdQuery,
+    useLazyGetUserByIdQuery,
+} = userApiSlice;

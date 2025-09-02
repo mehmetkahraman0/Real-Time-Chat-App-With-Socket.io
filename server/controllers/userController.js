@@ -6,71 +6,73 @@ import createToken from "../utils/createToken.js";
 
 const registerUser = asyncHandler(
     async (req, res) => {
-        const {username, password, email} = req.body;
+        const { username, password, email } = req.body;
 
         console.log(req.file);
-        if(!username || !password || !email){
-           return res.status(400).json({message:"Bilgileri eksiksiz giriniz."});
+        if (!username || !password || !email) {
+            return res.status(400).json({ message: "Bilgileri eksiksiz giriniz." });
         }
-        try{
+        try {
             const hashedPass = await bcrypt.hash(password, 12);
             const newUser = new User({
                 username,
                 password: hashedPass,
                 email,
-                userFoto :req.file.path
+                userFoto: req.file ? req.file.originalname : null,
             })
             await newUser.save();
             return res.status(200).json(newUser);
-        }catch (e) {
+        } catch (e) {
             console.error("register user error : ", e)
-            return res.status(400).json({message: "register user error :" + e});
+            return res.status(400).json({ message: "register user error :" + e });
         }
     }
 )
 
 const loginUser = asyncHandler(
     async (req, res) => {
-        const {username, password} = req.body;
-        if(!username || !password ){
-            return res.status(400).json({message:"Bilgileri eksiksiz giriniz."});
+        const { username, password } = req.body;
+        if (!username || !password) {
+            return res.status(400).json({ message: "Bilgileri eksiksiz giriniz." });
         }
-        const existingUser = await User.findOne({username});
-        if(existingUser){
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
             const isPasswordValid = await bcrypt.compare(password, existingUser.password);
-            if(isPasswordValid){
+            if (isPasswordValid) {
                 createToken(res, existingUser._id)
                 res.status(202).json({
-                    _id:existingUser._id,
-                    username:existingUser.username,
-                    email:existingUser.email,
-                    joinedChanel : existingUser.joinedChanel
+                    _id: existingUser._id,
+                    username: existingUser.username,
+                    email: existingUser.email,
+                    joinedChanel: existingUser.joinedChanel
                 });
-            }else{
-                return res.status(400).json({message:"Şifre eşleşmiyor"});
+            } else {
+                return res.status(400).json({ message: "Şifre eşleşmiyor." });
             }
-        }else{
-            return res.status(404).json({message:"Kullanıcı bulunamadı"})
+        } else {
+            return res.status(404).json({ message: "Kullanıcı bulunamadı." })
         }
     }
 )
 
 const logoutUser = asyncHandler(
     async (req, res) => {
-        res.cookie("token","", {
+        res.cookie("jwtToken", "", {
             httpOnly: true,
             expires: new Date(0)
         })
+        return res.status(200).json({ message: "Logged out successfully" });
     }
 )
 
 const getCurrentUser = asyncHandler(
     async (req, res) => {
-        try{
+        console.log(req.use)
+        try {
             const currentUser = await User.findById(req.user._id).select("-password");
             res.status(200).json(currentUser)
-        }catch (e) {
-            res.status(400).json({message:"kullanıcı bulunumadı : " + e});
+        } catch (e) {
+            res.status(400).json({ message: "kullanıcı bulunumadı : " + e });
         }
 
     }
@@ -85,19 +87,19 @@ const getAllUser = asyncHandler(
 //fix gerekiyor kullancının join chanel olayı halledilmeli
 const updateCurrentUser = asyncHandler(
     async (req, res) => {
-    console.log(req.user)
-        const {username, password,newPassword,email} = req.body;
-        try{
+        console.log(req.user)
+        const { username, password, newPassword, email } = req.body;
+        try {
             const user = await User.findById(req.user._id)
             user.username = username || user.username;
             user.email = email || user.email;
-            if(req.file) {
+            if (req.file) {
                 user.userFoto = req.file.path || user.userFoto
             }
-            if(newPassword){
+            if (newPassword) {
                 const oldPassword = await bcrypt.compare(password, user.password)
-               if(oldPassword)
-                   user.password = await bcrypt.hash(newPassword, 12)
+                if (oldPassword)
+                    user.password = await bcrypt.hash(newPassword, 12)
             }
             const updatedUser = await user.save()
             return res.status(200).json({
@@ -106,25 +108,25 @@ const updateCurrentUser = asyncHandler(
                 email: updatedUser.email,
                 userFoto: updatedUser.userFoto,
             })
-        }catch (e) {
-            return res.status(400).json({message:"Update Error : " + e});
+        } catch (e) {
+            return res.status(400).json({ message: "Update Error : " + e });
         }
     }
 )
 
 const getUserById = asyncHandler(
     async (req, res) => {
-        const {id} = req.params;
-        if(!id){
-            return res.status(404).json({message:"Kullanıcı bulunamadı. "});
+        const { id } = req.params;
+        if (!id) {
+            return res.status(404).json({ message: "Kullanıcı bulunamadı. " });
         }
-        try{
+        try {
             const user = await User.findById(id).select("-password");
             return res.status(200).json(user)
-        }catch (e) {
+        } catch (e) {
 
         }
     }
 )
 
-export { registerUser,loginUser, logoutUser,getCurrentUser,getAllUser,updateCurrentUser, getUserById}
+export { registerUser, loginUser, logoutUser, getCurrentUser, getAllUser, updateCurrentUser, getUserById }
