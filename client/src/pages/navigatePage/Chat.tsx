@@ -9,13 +9,12 @@ import {
     useJoinChanelWithInviteCodeMutation
 } from "../../redux/api/chanel.ts";
 import { Button, Modal } from "antd";
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { setSelectedChanel, setSelectedRoom } from "../../redux/app/selectedSlice.tsx";
 import LoaderWithTimeout from "../../components/Loader.tsx";
 import type { Chanel } from "../../Model/Chanel.ts";
-import defaultChanelFoto from "../../assets/undraw_relaunch-day_k3qo.svg"
-import selectedSlice from '../../redux/app/selectedSlice';
+import defaultChanelFoto from "../../assets/undraw_relaunch-day_k3qo.svg";
 import { useLazyGetRoomByIdQuery } from "../../redux/api/room.ts";
 
 const Chat = () => {
@@ -34,7 +33,7 @@ const Chat = () => {
     const [file, setFile] = useState<File | null>(null);
     const [inviteCode, setInviteCode] = useState("");
 
-    const submitCreateChanel = (e: any) => {
+    const submitCreateChanel = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("name", name);
@@ -54,7 +53,7 @@ const Chat = () => {
             })
     }
 
-    const handleJoinChanelWithInviteCode = (e: any) => {
+    const handleJoinChanelWithInviteCode = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         joinChanelWithInviteCode({ inviteCode }).unwrap()
             .then(res => {
@@ -74,7 +73,7 @@ const Chat = () => {
             })
     }
 
-    const handleSelectedChanel = (e: any) => {
+    const handleSelectedChanel = (e: Chanel) => {
         dispatch(setSelectedChanel(e))
     }
 

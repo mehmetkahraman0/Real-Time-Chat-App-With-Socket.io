@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import Loader from "../../components/Loader.tsx";
 import { useUserRegisterMutation } from "../../redux/api/user.ts";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const Register = () => {
     const [register, { isLoading }] = useUserRegisterMutation();
     console.log(isLoading)
     console.log(userInfo)
-    const submitHandler = async (e: any) => {
+    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             return toast.error("Şifreler uyuşmuyor.");
@@ -29,9 +29,9 @@ const Register = () => {
                     toast.success("Kayıt işlemi başarılı.")
                     navigate("/login")
                 })
-                .catch((e: any) => {
+                .catch((e: { data?: { message?: string } }) => {
                     console.log(e)
-                    toast.error(e.data.message)
+                    toast.error(e.data?.message ?? "Kayıt işlemi başarısız.")
                 })
         }
     }

@@ -1,14 +1,14 @@
-import { useSelector } from "react-redux"
-import type { RootState } from "../redux/store"
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store.ts";
 import { SiGoogleclassroom } from "react-icons/si";
 import { BsSend } from "react-icons/bs";
-import socket from "../socket/connectSocket";
-import { useEffect, useRef, useState } from "react";
-import {useLazyGetMessageQuery } from "../redux/api/message";
-import type { Message } from "../Model/Message";
-import type { Room } from "../Model/Room";
-import Loader from "./Loader";
-import noMessage from "../assets/undraw_moonlight_ctir.svg"
+import socket from "../socket/connectSocket.ts";
+import { type FormEvent, useEffect, useRef, useState } from "react";
+import { useLazyGetMessageQuery } from "../redux/api/message.ts";
+import type { Message } from "../Model/Message.ts";
+import type { Room } from "../Model/Room.ts";
+import Loader from "./Loader.tsx";
+import noMessage from "../assets/undraw_moonlight_ctir.svg";
 
 const MessageArea = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,7 +24,7 @@ const MessageArea = () => {
 
   const [messages, setMessages] = useState<Message[]>([])
 
-  const sendMessage = (e: any) => {
+  const sendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (message == "") return
     socket.emit("sendMessage", { userId: userInfo!._id, roomId: selectedRoom!._id, message, username: userInfo?.username });

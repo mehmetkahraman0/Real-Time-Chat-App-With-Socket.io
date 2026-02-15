@@ -1,16 +1,16 @@
-import { useParams } from "react-router-dom"
-import { useDeleteRoomInChanelMutation, useDeleteUserInChanelMutation, useGetChanelQuery } from "../../redux/api/chanel"
+import { useParams } from "react-router-dom";
+import { useDeleteRoomInChanelMutation, useDeleteUserInChanelMutation, useGetChanelQuery } from "../../redux/api/chanel.ts";
 import { useEffect, useState } from "react";
-import { useLazyGetUserByIdQuery } from "../../redux/api/user";
-import { useCreateRoomMutation, useLazyGetRoomByIdQuery, useUpdateRoomMutation } from "../../redux/api/room";
+import { useLazyGetUserByIdQuery } from "../../redux/api/user.ts";
+import { useCreateRoomMutation, useLazyGetRoomByIdQuery, useUpdateRoomMutation } from "../../redux/api/room.ts";
 import { FiSettings, FiUsers, FiLayers, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { Button, Modal, Table } from "antd";
 import { FaRegEdit } from "react-icons/fa";
-import type { Room } from "../../Model/Room";
-import type { User } from "../../Model/User";
-import { useWindowSize } from "../../functions/WindowSize";
+import type { Room } from "../../Model/Room.ts";
+import type { User } from "../../Model/User.ts";
+import { useWindowSize } from "../../functions/WindowSize.ts";
 
 
 const Settings = () => {
@@ -151,7 +151,7 @@ const Settings = () => {
         {
             title: <span className="font-semibold text-[12px] md:text-[14px]">İşlemler</span>,
             key: "actions",
-            render: (_: any, record: User) => (
+            render: (_: unknown, record: User) => (
                 <Button
                     type="text"
                     danger
@@ -178,7 +178,7 @@ const Settings = () => {
         {
             title: <span className="font-semibold text-[12px] md:text-[14px]">İşlemler</span>,
             key: "actions",
-            render: (_: any, record: Room) => (
+            render: (_: unknown, record: Room) => (
                 <>
                     <Button
                         type="text"
