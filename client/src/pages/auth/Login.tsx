@@ -48,11 +48,11 @@ const Login = ( ) => {
                 <hr />
                 <div className="flex flex-col gap-1">
                     <label className="font-semibold text-gray-600" htmlFor="text">Username</label>
-                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" />
+                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" autoComplete="username" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <label className="font-semibold text-gray-600" htmlFor="text">Password</label>
-                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
+                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" autoComplete="current-password" />
                 </div>
                 <button className=" flex flex-row justify-center items-center w-full py-1 rounded-md cursor-pointer font-semibold text-white bg-blue-500 hover:bg-blue-600 transition" type="submit" disabled={isLoading} >Register {isLoading ? <Loader/> : null}</button>
             </form>

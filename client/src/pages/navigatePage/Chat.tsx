@@ -92,7 +92,7 @@ const Chat = () => {
                                 <img className="h-20 w-20 object-cover rounded-[50%]" src={`http://localhost:3000/uploads/chanel/${chanel.chanelFoto}`} alt="chanel-foto" onError={(e) => { e.currentTarget.src = defaultChanelFoto; e.currentTarget.className = "h-20 w-20 object-cover rounded-[50%]" }} />
                                 <div className="w-full">
                                     <p className="w-full text-[12px] sm:text-[14px] font-medium overflow-hidden size-min ">{chanel.name}</p>
-                                    <p className="w-full text-[12px] md:font-light overflow-hidden flex items-center"><IoPersonOutline /> : {chanel.users.length}</p>
+                                    <p className="w-full text-[12px] md:font-light overflow-hidden flex items-center"><IoPersonOutline /> : {chanel.users?.length ?? 0}</p>
                                 </div>
                                 {chanel.isPrivate
                                     ? (
@@ -102,7 +102,7 @@ const Chat = () => {
                                     )}
                             </Link>
                         ))}
-                        {chanels.length == 0 && <p className="mt-10 font-semibold text-[20px] text-[#fffffe]"># Kayıtlı Kanal Yok</p>}
+                        {chanels && chanels.length === 0 && <p className="mt-10 font-semibold text-[20px] text-[#fffffe]"># Kayıtlı Kanal Yok</p>}
                 </div>
                 <div className="flex flex-row gap-5 fixed bottom-[-15px] left-1/2 transition -translate-x-1/2 -translate-y-1/2 size-max">
                     <button className=" px-4 py-1 rounded-md bg-gray-400/40 backdrop-blur-2xs  sm:text-white shadow-sm hover:bg-transparent hover:scale-105 transition text-[14px]" onClick={() => setIsOpenCreateModel((true))}> Kanal Oluştur</button>
