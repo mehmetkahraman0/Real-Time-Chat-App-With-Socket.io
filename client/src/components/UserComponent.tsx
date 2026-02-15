@@ -5,7 +5,7 @@ import {TbUsersGroup} from "react-icons/tb";
 import {GoPerson} from "react-icons/go";
 import type { User } from "../Model/User.ts";
 
-const UserComponent = ({users}) => {
+const UserComponent = ({ users }: { users: string[] }) => {
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const [userList, setUserList] = useState([]);
     const [getUserById] = useLazyGetUserByIdQuery();

@@ -1,7 +1,6 @@
 import { MdKeyboardDoubleArrowRight, MdOutlineTag } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useLazyGetRoomByIdQuery } from "../redux/api/room.ts";
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/store.ts";
 import { setSelectedRoom } from "../redux/app/selectedSlice.tsx";
@@ -10,9 +9,8 @@ import type { Room } from "../Model/Room.ts";
 import { useWindowSize } from "../functions/WindowSize.ts";
 import Loader from "./Loader.tsx";
 
-const RoomComponent = ({ rooms }) => {
+const RoomComponent = ({ rooms }: { rooms: string[] }) => {
     const dispatch = useDispatch<AppDispatch>()
-    const selectedChanel = useSelector((state: RootState) => state.selected.selectedChanel)
     const selectedRoom = useSelector((state: RootState) => state.selected.selectedRoom)
     const [isOpen, setIsOpen] = useState(true);
     let size = useWindowSize()
