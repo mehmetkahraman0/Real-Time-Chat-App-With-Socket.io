@@ -1,12 +1,11 @@
 import { useCreateInviteCodeInChanelMutation, useGetChanelQuery } from "../../redux/api/chanel.ts";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import RoomComponent from "../../components/RoomComponent.tsx";
 import MessageArea from "../../components/MessageArea.tsx";
 import Loader from "../../components/Loader.tsx";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../redux/store.ts";
-import { setSelectedChanel, setSelectedRoom } from "../../redux/app/selectedSlice.tsx";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store.ts";
 import { MdOutlineAddBox } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { GrChannel } from "react-icons/gr";
@@ -19,13 +18,11 @@ import { MdOutlineLocalPostOffice } from "react-icons/md";
 //import UserComponent from "../../components/UserComponent.tsx";
 
 const Chanel = () => {
-    const location = useLocation()
-    const dispatch = useDispatch<AppDispatch>()
     const { id } = useParams();
     const { data: chanel, isLoading: chanelLoading } = useGetChanelQuery(id)
     console.log(chanel)
     const [createRoom, { isLoading: createRoomLoading }] = useCreateRoomMutation()
-    const [createInviteCode, { isLoading: createInviteCodeLoading }] = useCreateInviteCodeInChanelMutation()
+    const [createInviteCode] = useCreateInviteCodeInChanelMutation()
     const selectedRoom = useSelector((state: RootState) => state.selected.selectedRoom)
     const userInfo = useSelector((state: RootState) => state.auth.userInfo)
     const [isAddRoomModel, setIsAddModel] = useState(false)

@@ -7,7 +7,7 @@ import type { User } from "../Model/User.ts";
 
 const UserComponent = ({ users }: { users: string[] }) => {
     const [isOpen, setIsOpen] = useState<boolean>(true);
-    const [userList, setUserList] = useState([]);
+    const [userList, setUserList] = useState<User[]>([]);
     const [getUserById] = useLazyGetUserByIdQuery();
 
     useEffect(()=>{
@@ -19,7 +19,7 @@ const UserComponent = ({ users }: { users: string[] }) => {
                 console.log(error)
                 console.log(data)
                 if(data)
-                    setUserList((prev) =>[...prev, data])
+                    setUserList((prev: User[]) => [...prev, data])
             }catch (e) {
                 console.log(e)
             }
@@ -36,7 +36,7 @@ const UserComponent = ({ users }: { users: string[] }) => {
                     </div>
                 </header>
                 <div className="flex flex-col mt-2 gap-2 overflow-scroll">
-                    {userList.map((user:User, index) => (
+                    {userList.map((user: User, index: number) => (
                         <div key={index}  className="flex flex-row items-center gap-1 pl-1 py-2 hover:bg-gray-500 rounded-md">
                             {user.userFoto == null
                                     ? (<GoPerson className="w-10 h-10 rounded-[50%] border p-1 bg-gray-400 text-gray-600"/>)
