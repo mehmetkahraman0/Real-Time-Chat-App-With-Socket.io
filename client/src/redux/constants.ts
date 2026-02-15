@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:3000/"
+export const BASE_URL = "http://62.84.187.91:3000/"
 export const USER_URL = "api/user"
 export const ROOM_URL = "api/room"
 export const CHANEL_URL = "api/chanel"
