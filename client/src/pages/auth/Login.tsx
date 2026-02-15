@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Loader from "../../components/Loader.tsx";
 import {useUserLoginMutation} from "../../redux/api/user.ts";
 import {useDispatch, useSelector} from "react-redux";
@@ -17,17 +17,17 @@ const Login = ( ) => {
     const [password,setPassword] = useState("");
     const [login, {isLoading}] = useUserLoginMutation();
 
-    const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const submitHandler =  (e) => {
         e.preventDefault();
-        login({ username, password })
+        login({username,password})
             .unwrap()
             .then((res) => {
-                dispatch(setCredentials({ ...res }));
-                toast.success("Giriş işlemi başarılı.");
+                dispatch(setCredentials({...res}))
+                toast.success("Giriş işlemi başarılı.")
             })
-            .catch((e: { data?: { message?: string } }) => {
-                toast.error(e.data?.message ?? "Giriş başarısız.");
-            });
+            .catch((e) => {
+                toast.error(e.data.message)
+            })
     }
 
      //logout işlemide eklendikten sonra kullanıcak.
@@ -48,11 +48,11 @@ const Login = ( ) => {
                 <hr />
                 <div className="flex flex-col gap-1">
                     <label className="font-semibold text-gray-600" htmlFor="text">Username</label>
-                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" autoComplete="username" />
+                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <label className="font-semibold text-gray-600" htmlFor="text">Password</label>
-                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" autoComplete="current-password" />
+                    <input className="px-3 py-1 border-0 border-b-2  border-gray-400 font-light tracking-tight placeholder:opacity-40 placeholder:font-extralight focus:outline-none focus:border-blue-500 transition" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
                 </div>
                 <button className=" flex flex-row justify-center items-center w-full py-1 rounded-md cursor-pointer font-semibold text-white bg-blue-500 hover:bg-blue-600 transition" type="submit" disabled={isLoading} >Register {isLoading ? <Loader/> : null}</button>
             </form>

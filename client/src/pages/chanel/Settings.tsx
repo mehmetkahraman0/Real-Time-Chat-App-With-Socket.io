@@ -1,16 +1,16 @@
-import { useParams } from "react-router-dom";
-import { useDeleteRoomInChanelMutation, useDeleteUserInChanelMutation, useGetChanelQuery } from "../../redux/api/chanel.ts";
+import { useParams } from "react-router-dom"
+import { useDeleteRoomInChanelMutation, useDeleteUserInChanelMutation, useGetChanelQuery } from "../../redux/api/chanel"
 import { useEffect, useState } from "react";
-import { useLazyGetUserByIdQuery } from "../../redux/api/user.ts";
-import { useCreateRoomMutation, useLazyGetRoomByIdQuery, useUpdateRoomMutation } from "../../redux/api/room.ts";
+import { useLazyGetUserByIdQuery } from "../../redux/api/user";
+import { useCreateRoomMutation, useLazyGetRoomByIdQuery, useUpdateRoomMutation } from "../../redux/api/room";
 import { FiSettings, FiUsers, FiLayers, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { Button, Modal, Table } from "antd";
 import { FaRegEdit } from "react-icons/fa";
-import type { Room } from "../../Model/Room.ts";
-import type { User } from "../../Model/User.ts";
-import { useWindowSize } from "../../functions/WindowSize.ts";
+import type { Room } from "../../Model/Room";
+import type { User } from "../../Model/User";
+import { useWindowSize } from "../../functions/WindowSize";
 
 
 const Settings = () => {
@@ -19,12 +19,12 @@ const Settings = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [isOpen, setIsOpen] = useState(true)
     console.log(id)
-    const { data: chanel} = useGetChanelQuery(id)
+    const { data: chanel, isLoading } = useGetChanelQuery(id)
     console.log(chanel)
-    const [getUser] = useLazyGetUserByIdQuery()
-    const [getRoom] = useLazyGetRoomByIdQuery()
+    const [getUser, { isLoading: getUserLoading }] = useLazyGetUserByIdQuery()
+    const [getRoom, { isLoading: getRoomLoading }] = useLazyGetRoomByIdQuery()
     const [deleteUserInChanel, { isLoading: deleteUserLoading }] = useDeleteUserInChanelMutation()
-    const [deleteRoomInChanel] = useDeleteRoomInChanelMutation()
+    const [deleteRoomInChanel, { isLoading: deleteRoomLoading }] = useDeleteRoomInChanelMutation()
     const [createRoom, { isLoading: createRoomLoading }] = useCreateRoomMutation()
     const [deleteUserConfirm, setDeleteUserConfirm] = useState("")
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -151,7 +151,7 @@ const Settings = () => {
         {
             title: <span className="font-semibold text-[12px] md:text-[14px]">İşlemler</span>,
             key: "actions",
-            render: (_: unknown, record: User) => (
+            render: (_: any, record: User) => (
                 <Button
                     type="text"
                     danger
@@ -178,7 +178,7 @@ const Settings = () => {
         {
             title: <span className="font-semibold text-[12px] md:text-[14px]">İşlemler</span>,
             key: "actions",
-            render: (_: unknown, record: Room) => (
+            render: (_: any, record: Room) => (
                 <>
                     <Button
                         type="text"

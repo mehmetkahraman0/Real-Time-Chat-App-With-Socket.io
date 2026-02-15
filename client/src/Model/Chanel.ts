@@ -1,5 +1,5 @@
-import type { Room } from "./Room.ts";
-import type { User } from "./User.ts";
+import type { Room } from "./Room"
+import type { User } from "./User"
 
 export interface Chanel {
     _id:string

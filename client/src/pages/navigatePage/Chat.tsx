@@ -9,12 +9,13 @@ import {
     useJoinChanelWithInviteCodeMutation
 } from "../../redux/api/chanel.ts";
 import { Button, Modal } from "antd";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { setSelectedChanel, setSelectedRoom } from "../../redux/app/selectedSlice.tsx";
 import LoaderWithTimeout from "../../components/Loader.tsx";
 import type { Chanel } from "../../Model/Chanel.ts";
-import defaultChanelFoto from "../../assets/undraw_relaunch-day_k3qo.svg";
+import defaultChanelFoto from "../../assets/undraw_relaunch-day_k3qo.svg"
+import selectedSlice from '../../redux/app/selectedSlice';
 import { useLazyGetRoomByIdQuery } from "../../redux/api/room.ts";
 
 const Chat = () => {
@@ -33,7 +34,7 @@ const Chat = () => {
     const [file, setFile] = useState<File | null>(null);
     const [inviteCode, setInviteCode] = useState("");
 
-    const submitCreateChanel = (e: FormEvent<HTMLFormElement>) => {
+    const submitCreateChanel = (e: any) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("name", name);
@@ -53,7 +54,7 @@ const Chat = () => {
             })
     }
 
-    const handleJoinChanelWithInviteCode = (e: FormEvent<HTMLFormElement>) => {
+    const handleJoinChanelWithInviteCode = (e: any) => {
         e.preventDefault();
         joinChanelWithInviteCode({ inviteCode }).unwrap()
             .then(res => {
@@ -73,7 +74,7 @@ const Chat = () => {
             })
     }
 
-    const handleSelectedChanel = (e: Chanel) => {
+    const handleSelectedChanel = (e: any) => {
         dispatch(setSelectedChanel(e))
     }
 
@@ -92,7 +93,7 @@ const Chat = () => {
                                 <img className="h-20 w-20 object-cover rounded-[50%]" src={`http://localhost:3000/uploads/chanel/${chanel.chanelFoto}`} alt="chanel-foto" onError={(e) => { e.currentTarget.src = defaultChanelFoto; e.currentTarget.className = "h-20 w-20 object-cover rounded-[50%]" }} />
                                 <div className="w-full">
                                     <p className="w-full text-[12px] sm:text-[14px] font-medium overflow-hidden size-min ">{chanel.name}</p>
-                                    <p className="w-full text-[12px] md:font-light overflow-hidden flex items-center"><IoPersonOutline /> : {chanel.users?.length ?? 0}</p>
+                                    <p className="w-full text-[12px] md:font-light overflow-hidden flex items-center"><IoPersonOutline /> : {chanel.users.length}</p>
                                 </div>
                                 {chanel.isPrivate
                                     ? (
@@ -102,7 +103,7 @@ const Chat = () => {
                                     )}
                             </Link>
                         ))}
-                        {chanels && chanels.length === 0 && <p className="mt-10 font-semibold text-[20px] text-[#fffffe]"># Kayıtlı Kanal Yok</p>}
+                        {chanels.length == 0 && <p className="mt-10 font-semibold text-[20px] text-[#fffffe]"># Kayıtlı Kanal Yok</p>}
                 </div>
                 <div className="flex flex-row gap-5 fixed bottom-[-15px] left-1/2 transition -translate-x-1/2 -translate-y-1/2 size-max">
                     <button className=" px-4 py-1 rounded-md bg-gray-400/40 backdrop-blur-2xs  sm:text-white shadow-sm hover:bg-transparent hover:scale-105 transition text-[14px]" onClick={() => setIsOpenCreateModel((true))}> Kanal Oluştur</button>

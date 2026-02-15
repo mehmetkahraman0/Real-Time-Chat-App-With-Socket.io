@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Room } from "../../Model/Room.ts";
-import type { Chanel } from "../../Model/Chanel.ts";
+import type { Room } from "../../Model/Room";
+import type { Chanel } from "../../Model/Chanel";
 
 interface selectedState {
     selectedRoom: Room | null
@@ -18,20 +18,20 @@ const selectedSlice = createSlice({
     name: "selected",
     initialState,
     reducers: {
-        setSelectedRoom: (state, action: PayloadAction<Room | null>) => {
+        setSelectedRoom: (state, action: PayloadAction<any>) => {
             state.selectedRoom = action.payload || null;
             if (action.payload) {
                 localStorage.setItem("selectedRoom", JSON.stringify(action.payload));
             }
         },
-        setSelectedChanel: (state, action: PayloadAction<Chanel | null>) => {
+        setSelectedChanel: (state, action: PayloadAction<any>) => {
             state.selectedChanel = action.payload || null;
             if (action.payload) {
                 localStorage.setItem("selectedChanel", JSON.stringify(action.payload));
             }
         },
-        setSelectedNavbar: (state, action: PayloadAction<string | null>) => {
-            state.selectedNavbar = action.payload;
+        setSelectedNavbar : ( state, action) => {
+            state.selectedNavbar = action.payload
         }
 
     }

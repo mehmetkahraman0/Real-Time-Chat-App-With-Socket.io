@@ -38,11 +38,9 @@ const renderElement = <>
 
 createRoot(document.getElementById('root')!).render(renderElement);
 
-type ContainerWithReactRoot = Element & { _reactRoot?: ReturnType<typeof createRoot> };
 unstableSetRender((node, container) => {
-    const c = container as ContainerWithReactRoot;
-    c._reactRoot ??= createRoot(container);
-    const root = c._reactRoot;
+    container._reactRoot ||= createRoot(container);
+    const root = container._reactRoot;
     root.render(node);
     return async () => {
         await new Promise((resolve) => setTimeout(resolve, 0));
