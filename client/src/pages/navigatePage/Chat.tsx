@@ -15,7 +15,6 @@ import { setSelectedChanel, setSelectedRoom } from "../../redux/app/selectedSlic
 import LoaderWithTimeout from "../../components/Loader.tsx";
 import type { Chanel } from "../../Model/Chanel.ts";
 import defaultChanelFoto from "../../assets/undraw_relaunch-day_k3qo.svg"
-import selectedSlice from '../../redux/app/selectedSlice';
 import { useLazyGetRoomByIdQuery } from "../../redux/api/room.ts";
 
 const Chat = () => {
