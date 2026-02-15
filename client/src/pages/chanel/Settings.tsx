@@ -19,12 +19,12 @@ const Settings = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [isOpen, setIsOpen] = useState(true)
     console.log(id)
-    const { data: chanel, isLoading } = useGetChanelQuery(id)
+    const { data: chanel} = useGetChanelQuery(id)
     console.log(chanel)
-    const [getUser, { isLoading: getUserLoading }] = useLazyGetUserByIdQuery()
-    const [getRoom, { isLoading: getRoomLoading }] = useLazyGetRoomByIdQuery()
+    const [getUser] = useLazyGetUserByIdQuery()
+    const [getRoom] = useLazyGetRoomByIdQuery()
     const [deleteUserInChanel, { isLoading: deleteUserLoading }] = useDeleteUserInChanelMutation()
-    const [deleteRoomInChanel, { isLoading: deleteRoomLoading }] = useDeleteRoomInChanelMutation()
+    const [deleteRoomInChanel] = useDeleteRoomInChanelMutation()
     const [createRoom, { isLoading: createRoomLoading }] = useCreateRoomMutation()
     const [deleteUserConfirm, setDeleteUserConfirm] = useState("")
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
