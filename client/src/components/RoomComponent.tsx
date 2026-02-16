@@ -63,7 +63,7 @@ const RoomComponent = ({ rooms }: { rooms: string[] }) => {
                         {roomList.map((room, index) => (
                             <div key={index} className={`flex flex-row items-center gap-1 p-1 hover:bg-[#16161a] rounded-md `} onClick={() => toggle(room)}>
                                 <MdOutlineTag className={`text-[16px] `} />
-                                <p className={`${isOpen ? "block" : "hidden"} text-[14px]`}> {room.name}</p>
+                                <p className={`${isOpen ? "block" : "hidden"} text-[14px]`}> {room?.name}</p>
                             </div>
                         ))}
                     </div>)}
