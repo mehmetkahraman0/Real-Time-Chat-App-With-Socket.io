@@ -19,12 +19,12 @@ const Settings = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [isOpen, setIsOpen] = useState(true)
     console.log(id)
-    const { data: chanel, isLoading } = useGetChanelQuery(id)
+    const { data: chanel} = useGetChanelQuery(id)
     console.log(chanel)
-    const [getUser, { isLoading: getUserLoading }] = useLazyGetUserByIdQuery()
-    const [getRoom, { isLoading: getRoomLoading }] = useLazyGetRoomByIdQuery()
+    const [getUser] = useLazyGetUserByIdQuery()
+    const [getRoom] = useLazyGetRoomByIdQuery()
     const [deleteUserInChanel, { isLoading: deleteUserLoading }] = useDeleteUserInChanelMutation()
-    const [deleteRoomInChanel, { isLoading: deleteRoomLoading }] = useDeleteRoomInChanelMutation()
+    const [deleteRoomInChanel] = useDeleteRoomInChanelMutation()
     const [createRoom, { isLoading: createRoomLoading }] = useCreateRoomMutation()
     const [deleteUserConfirm, setDeleteUserConfirm] = useState("")
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -245,7 +245,7 @@ const Settings = () => {
                 <button className={`flex items-center gap-2 pl-1 py-2 w-full text-sm transition  ${selectedSideBar === "Rooms" ? "font-semibold bg-gray-200 text-black rounded-md" : ""}`} onClick={() => toggle("Rooms")}> <FiLayers className="text-[20px]" />{isOpen && "Odaları Yönet"}</button>
                 <button className={`flex items-center gap-2 pl-1 py-2 w-full text-sm transition  ${selectedSideBar === "Users" ? "font-semibold bg-gray-200 text-black rounded-md" : ""}`} onClick={() => toggle("Users")}><FiUsers className="text-[20px]" />{isOpen && "Kullanıcıları Yönet"}</button>
             </div>
-            <div className="h-[75vh] w-[2px] bg-gray-300"></div>
+            <div className="h-[75vh] w-0.5 bg-gray-300"></div>
             {selectedSideBar == "Users" && (
                 <div className="my-3 mr-3 ml-9 sm:ml-3  w-full bg-white rounded-md shadow-lg p-6 space-y-4">
                     <Table<User> style={{ width: "100%" }} columns={userColumns} dataSource={users} rowKey="_id" pagination={{ pageSize: 5 }} />
