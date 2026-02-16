@@ -136,7 +136,7 @@ const Settings = () => {
             key: "userFoto",
             render: () => (
                 <img
-                    src={`http://localhost:3000/uploads/chanel/${chanel.chanelFoto}` || ""}
+                    src={`https://api.mehmetkahraman.me/uploads/chanel/${chanel?.[0]?.chanelFoto}` || ""}
                     alt="avatar"
                     className="w-10 h-10 rounded-full object-cover border"
                 />
