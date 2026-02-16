@@ -80,10 +80,10 @@ const MessageArea = () => {
         <p className=" px-1 py-2 flex flex-row gap-2 items-center text-[14px] text-[#94a1b2]"><SiGoogleclassroom className="text-[24px]" />{`${selectedRoom ? selectedRoom.name: ""}`}</p>
       </header>
       <div ref={containerRef} className="flex flex-col h-full gap-3 overflow-scroll mb-2 mt-2">
-        {isLoading && (<div className="flex w-full h-[100vh] justify-center items-center"> <Loader/> </div>)}
+        {isLoading && (<div className="flex w-full  h-screen justify-center items-center"> <Loader/> </div>)}
         {!(messages.length || messages.length) && !isLoading && (<div className="flex flex-col justify-center items-center mt-[10%]"><img className="w-50" src={noMessage} alt="" /> <p className="font-semibold text-[22px] tracking-tighter text-[#94a1b2]">İlk Mesajı Sen At</p></div>)}
         {messages.map((message: Message, index) => (
-          <div key={index} className={`flex flex-col py-1 px-2 rounded-lg max-w-[70%] min-w-[20%] break-words shadow-md ${userInfo?._id == message.userId ? "ml-auto bg-white text-black rounded-br-none justify-end " : "bg-gray-300 text-gray-800 rounded-bl-none"}`}>
+          <div key={index} className={`flex flex-col py-1 px-2 rounded-lg max-w-[70%] min-w-[20%] wrap-break-word shadow-md ${userInfo?._id == message.userId ? "ml-auto bg-white text-black rounded-br-none justify-end " : "bg-gray-300 text-gray-800 rounded-bl-none"}`}>
             {userInfo?._id == message.userId ? "" : <p className="text-[14px] font-medium">-{message.username}</p>}
             <p className="text-[14px]">{message.message}</p>
             <p className="text-end font-extralight text-[10px]">{formatTime(message.createdAt)}</p>
@@ -93,7 +93,7 @@ const MessageArea = () => {
       <div className="self-end justify-self-end w-full">
         <form className="w-full flex flex-row relative" action="" onSubmit={sendMessage}>
           <input value={message} type="text" className="border-amber-50 border text-amber-50 outline-0 placeholder:text-amber-50 w-full rounded-sm p-1 text-[14px]" onChange={(e) => setMessage(e.target.value)} placeholder="Mesajını gönder" />
-          <button className="!absolute right-2 top-[50%] -translate-y-1/2 !p-0 cursor-pointer text-amber-50" type="submit"><BsSend /></button>
+          <button className="absolute! right-2 top-[50%] -translate-y-1/2 p-0! cursor-pointer text-amber-50" type="submit"><BsSend /></button>
         </form>
       </div>
     </div>

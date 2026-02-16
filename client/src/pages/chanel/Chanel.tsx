@@ -5,7 +5,7 @@ import MessageArea from "../../components/MessageArea.tsx";
 import Loader from "../../components/Loader.tsx";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store.ts";
+import type {  RootState } from "../../redux/store.ts";
 import { MdOutlineAddBox } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { GrChannel } from "react-icons/gr";

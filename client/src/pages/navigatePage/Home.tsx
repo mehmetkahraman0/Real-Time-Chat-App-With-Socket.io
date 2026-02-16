@@ -6,8 +6,8 @@ const Home = () => {
         <div className=" flex flex-col items-center justify-center rounded-md gap-1">
             <div className="bg-[#16161a] w-full flex flex-row justify-center items-center md:items-end gap-8 flex-wrap border-b-2 m-2 px-1 py-5 rounded-md shadow-lg">
                 <img className="sm:w-120 lg:w-160 xl:w-170" src={svg1} alt="svg" />
-                <div className="text-[#94a1b2] flex flex-col items-end justify-end md:ml-[-270px]">
-                    <p className=" text-center mb-[-10px] text-[36px] font-medium size-fit self-center md:self-end text-shadow-sm text-shadow-white">Eglenceli Grup Sohbetlerine</p>
+                <div className="text-[#94a1b2] flex flex-col items-end justify-end md:ml-67.5">
+                    <p className=" text-center -mb-2.5 text-[36px] font-medium size-fit self-center md:self-end text-shadow-sm text-shadow-white">Eglenceli Grup Sohbetlerine</p>
                     <p className=" text-[50px] font-semibold self-center md:self-end text-shadow-sm text-shadow-white">Hoşgeldiniz</p>
                 </div>
             </div>

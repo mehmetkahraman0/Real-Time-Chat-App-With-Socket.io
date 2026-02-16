@@ -1,13 +1,15 @@
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
 import Loader from "../../components/Loader.tsx";
 import { useUserRegisterMutation } from "../../redux/api/user.ts";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store.ts";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../redux/store.ts";
 import { toast } from "react-toastify";
+import { setCredentials } from "../../redux/features/auth/authSlice.tsx";
 import { useNavigate } from "react-router-dom";
 //import {useLocation, useNavigate} from "react-router-dom";
 
 const Register = () => {
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate();
     const { userInfo } = useSelector((state: RootState) => state.auth)
     const [username, setUsername] = useState("");
@@ -17,19 +19,19 @@ const Register = () => {
     const [register, { isLoading }] = useUserRegisterMutation();
     console.log(isLoading)
     console.log(userInfo)
-    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (e: any) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             return toast.error("Şifreler uyuşmuyor.");
         } else {
             register({ username, email, password }).unwrap()
-                .then(() => {
-                    toast.success("Kayıt işlemi başarılı.");
-                    navigate("/login");
+                .then((res) => {
+                    toast.success("Kayıt işlemi başarılı.")
+                    navigate("/login")
                 })
-                .catch((e: { data?: { message?: string } }) => {
-                    console.log(e);
-                    toast.error(e.data?.message ?? "Kayıt işlemi başarısız.");
+                .catch((e: any) => {
+                    console.log(e)
+                    toast.error(e.data.message)
                 })
         }
     }

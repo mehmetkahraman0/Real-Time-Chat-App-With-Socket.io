@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Loader from "../../components/Loader.tsx";
 import {useUserLoginMutation} from "../../redux/api/user.ts";
 import {useDispatch, useSelector} from "react-redux";
@@ -17,17 +17,17 @@ const Login = ( ) => {
     const [password,setPassword] = useState("");
     const [login, {isLoading}] = useUserLoginMutation();
 
-    const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const submitHandler =  ( e : any) => {
         e.preventDefault();
-        login({ username, password })
+        login({username,password})
             .unwrap()
             .then((res) => {
-                dispatch(setCredentials({ ...res }));
-                toast.success("Giriş işlemi başarılı.");
+                dispatch(setCredentials({...res}))
+                toast.success("Giriş işlemi başarılı.")
             })
-            .catch((e: { data?: { message?: string } }) => {
-                toast.error(e.data?.message ?? "Giriş başarısız.");
-            });
+            .catch((e) => {
+                toast.error(e.data.message)
+            })
     }
 
      //logout işlemide eklendikten sonra kullanıcak.
