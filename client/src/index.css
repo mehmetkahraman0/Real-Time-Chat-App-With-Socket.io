@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* From Uiverse.io by Fernando-sv */
+body {
+    background-color: #242629;
+
+}
+
+.loader {
+    border: 4px solid rgba(0, 0, 0, .2);
+    border-left-color: transparent;
+    border-radius: 50%;
+}
+
+.loader {
+    border: 4px solid rgba(0, 0, 0, .2);
+    border-left-color: transparent;
+    width: 25px;
+    height: 25px;
+}
+
+.loader {
+    border: 4px solid rgba(0, 0, 0, .2);
+    border-left-color: transparent;
+    width: 25px;
+    height: 25px;
+    animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.custom-table .ant-table-thead>tr>th {
+    font-size: 1px;
+    font-weight: 600;
+}
+
+/* Hücrelerin yazı boyutu */
+.custom-table .ant-table-tbody>tr>td {
+    font-size: 1px;
+}
