@@ -1,5 +1,0 @@
-export const BASE_URL = "https://api.mehmetkahraman.me"
-export const USER_URL = "api/user"
-export const ROOM_URL = "api/room"
-export const CHANEL_URL = "api/chanel"
-export const MESSAGE_URL = "api/message"
