@@ -92,7 +92,7 @@ const { data: chanels, isLoading: getChanelByUserLoading } = useGetChanelByUserQ
                 <div className=" grid md:grid-cols-2 lg:grid-cols-3 justify-center md:justify-center items-center gap-3 mb-16">
                         { chanels?.map((chanel: Chanel, index: number) => (
                             <Link key={index} className="text-[#fffffe] md:max-w-100 justify-around flex flex-row items-center gap-10 bg-[#16161a] hover:bg-[#242629] hover:shadow-xl  transition px-2 py-2 rounded-md last:mb-16 last:sm:mb-0" to={`/chanel/${chanel._id}`} onClick={() => handleSelectedChanel(chanel)}>
-                                <img className="h-20 w-20 object-cover rounded-[50%]" src={`http://localhost:3000/uploads/chanel/${chanel.chanelFoto}`} alt="chanel-foto" onError={(e) => { e.currentTarget.src = defaultChanelFoto; e.currentTarget.className = "h-20 w-20 object-cover rounded-[50%]" }} />
+                                <img className="h-20 w-20 object-cover rounded-[50%]" src={`https://api.mehmetkahraman.me/uploads/chanel/${chanel.chanelFoto}`} alt="chanel-foto" onError={(e) => { e.currentTarget.src = defaultChanelFoto; e.currentTarget.className = "h-20 w-20 object-cover rounded-[50%]" }} />
                                 <div className="w-full">
                                     <p className="w-full text-[12px] sm:text-[14px] font-medium overflow-hidden size-min ">{chanel.name}</p>
                                     <p className="w-full text-[12px] md:font-light overflow-hidden flex items-center"><IoPersonOutline /> : {chanel.users.length}</p>
@@ -105,7 +105,7 @@ const { data: chanels, isLoading: getChanelByUserLoading } = useGetChanelByUserQ
                                     )}
                             </Link>
                         ))}
-                        {chanels.length == 0 && <p className="mt-10 font-semibold text-[20px] text-[#fffffe]"># Kayıtlı Kanal Yok</p>}
+                        {!chanels?.length &&<p className="mt-10 font-semibold text-[20px] text-[#fffffe]"># Kayıtlı Kanal Yok</p>}
                 </div>
                 <div className="flex flex-row gap-5 fixed -bottom-3.75 left-1/2 transition -translate-x-1/2 -translate-y-1/2 size-max">
                     <button className=" px-4 py-1 rounded-md bg-gray-400/40 backdrop-blur-2xs  sm:text-white shadow-sm hover:bg-transparent hover:scale-105 transition text-[14px]" onClick={() => setIsOpenCreateModel((true))}> Kanal Oluştur</button>
