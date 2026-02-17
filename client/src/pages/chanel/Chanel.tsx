@@ -69,10 +69,10 @@ const Chanel = () => {
                 : (
                     <div className="mt-3 flex flex-col w-full h-full bg-[#16161a] rounded-md pt-3">
                         <div className="flex flex-row items-center justify-between bg-[#242629] mx-5 rounded-md px-1 text-[#fffffe]">
-                            <p className="text-[15px] px-1 py-2 flex flex-row items-start gap-1"><GrChannel className="text-[20px]" />{chanel?.[0].name}</p>
+                            <p className="text-[15px] px-1 py-2 flex flex-row items-start gap-1"><GrChannel className="text-[20px]" />{chanel?.[0]?.name}</p>
                             <div className="flex items-center gap-2">
                                 <button onClick={() => setIsCreateCodeModel(true)}><MdOutlineLocalPostOffice className="text-[24px]" /></button>
-                                {userInfo?._id == chanel[0].admin && (
+                                {userInfo?._id == chanel[0]?.admin && (
                                     <div className="flex flex-row items-center gap-2">
                                         <button onClick={() => setIsAddModel(true)}><MdOutlineAddBox className="text-[24px] hover:text-[#94a1b2]" /></button>
                                         <Link title="Settings" to={`/chanel/${id}/settings`}> <FiSettings className="text-[20px] hover:text-[#94a1b2]" /></Link>
@@ -82,8 +82,9 @@ const Chanel = () => {
                         </div>
                         <div className="flex flex-row">
                             <RoomComponent rooms={chanel?.[0]?.rooms} />
+
                             {selectedRoom
-                                ? <MessageArea />
+                                ? <MessageArea  key={selectedRoom._id}/>
                                 : (
                                     <div className="flex justify-center items-center w-full h-[70vh] md:h-[75vh] bg-[#242629] my-5 md:mx-5 rounded-md p-1 ml-15 mt-5 mr-5">
                                         <img className="w-50" src={svg} alt="" />
