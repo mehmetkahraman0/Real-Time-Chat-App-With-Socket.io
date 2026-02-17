@@ -3,9 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import RoomComponent from "../../components/RoomComponent.tsx";
 import MessageArea from "../../components/MessageArea.tsx";
 import Loader from "../../components/Loader.tsx";
-import {  useState } from "react";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store.ts";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { type AppDispatch, type RootState } from "../../redux/store.ts";
 import { MdOutlineAddBox } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { GrChannel } from "react-icons/gr";
@@ -14,12 +14,15 @@ import { useCreateRoomMutation } from "../../redux/api/room.ts";
 import { toast } from "react-toastify";
 import svg from "../../assets/undraw_chat_qmyo.svg"
 import { MdOutlineLocalPostOffice } from "react-icons/md";
+import { setSelectedChanel } from "../../redux/app/selectedSlice";
+
 
 //import UserComponent from "../../components/UserComponent.tsx";
 
 const Chanel = () => {
 
     const { id } = useParams();
+    const dispatch = useDispatch<AppDispatch>()
     const { data: chanel, isLoading: chanelLoading } = useGetChanelQuery(id)
     console.log(chanel)
     const [createRoom, { isLoading: createRoomLoading }] = useCreateRoomMutation()
@@ -56,6 +59,11 @@ const Chanel = () => {
                 console.log(e);
             })
     }
+    useEffect(() => {
+        if (chanel?.[0]) {
+            dispatch(setSelectedChanel(chanel[0]))
+        }
+    }, [chanel])
 
     // useEffect(() => {
     //     dispatch(setSelectedRoom(null))
@@ -84,7 +92,7 @@ const Chanel = () => {
                             <RoomComponent rooms={chanel?.[0]?.rooms} />
 
                             {selectedRoom
-                                ? <MessageArea  key={selectedRoom._id}/>
+                                ? <MessageArea key={selectedRoom._id} />
                                 : (
                                     <div className="flex justify-center items-center w-full h-[70vh] md:h-[75vh] bg-[#242629] my-5 md:mx-5 rounded-md p-1 ml-15 mt-5 mr-5">
                                         <img className="w-50" src={svg} alt="" />

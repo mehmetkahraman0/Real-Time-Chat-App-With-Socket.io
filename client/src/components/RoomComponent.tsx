@@ -17,7 +17,7 @@ const RoomComponent = ({ rooms }: { rooms: string[] }) => {
     const [getRoomById, { isFetching }] = useLazyGetRoomByIdQuery()
     const [roomList, setRoomList] = useState<Room[]>([])
 
-    const toggle = (item: Room | null = selectedRoom) => {
+    const toggle = (item: Room) => {
         dispatch(setSelectedRoom(item))
         socket.emit("joinRoom", item!._id);
         if (item == selectedRoom) {
